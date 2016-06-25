@@ -1,6 +1,5 @@
 //
-//  Stage.swift
-//  IcebergGenerator
+//  IcebergGenerator.swift: The stage object that generates icebergs. It calls the delegate method after each new iceberg is generated, passing the iceberg object that was just generated as a parameter.
 //
 //  Created by Matthew Tso on 5/24/16.
 //  Copyright © 2016 De Anza. All rights reserved.
@@ -13,9 +12,20 @@ enum pathingMode {
     case straight
 }
 
+/// The delegate protocol that the game scene conforms to and implements in order to generate new game objects based on the last iceberg created by the IcebergGenerator.
+protocol IcebergGeneratorDelegate {
+    /** 
+        The IcebergGenerator calls this function after each iceberg is added as a child and assigned a position.
+        - parameter generatedIceberg: The Iceberg that was generated.
+    */
+    func didGenerateIceberg(generatedIceberg: Iceberg)
+}
+
 class IcebergGenerator: SKSpriteNode {
     
-    var camera:SKCameraNode!
+    var delegate: IcebergGeneratorDelegate?
+    
+    unowned let camera: SKCameraNode
     
     var bergSize:CGFloat = 150.0
     let maxBergSize:CGFloat = 150.0
@@ -35,9 +45,9 @@ class IcebergGenerator: SKSpriteNode {
     var highestRightBerg: Iceberg?
     
     init(view: SKView, camera sceneCamera: SKCameraNode) {
+        camera = sceneCamera
         super.init(texture: nil, color: UIColor.clearColor(), size: view.frame.size)
         position = view.center
-        camera = sceneCamera
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,12 +58,12 @@ class IcebergGenerator: SKSpriteNode {
         removeAllChildren()
         
         let firstBergSize = CGSize(width: scene!.view!.frame.width, height: scene!.view!.frame.width)
-        let firstBerg = Iceberg(size: firstBergSize)
+        let firstBerg = Iceberg(size: firstBergSize, stormMode: (scene as! GameScene).stormMode)
         firstBerg.name = "firstBerg"
         firstBerg.position = startPoint
         firstBerg.position.y -= firstBerg.frame.height * 0.38
         
-        let secondBerg = Iceberg(size: CGSize(width: bergSize, height: bergSize))
+        let secondBerg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
         secondBerg.position = startPoint
         secondBerg.position.y += 300
         
@@ -116,7 +126,7 @@ class IcebergGenerator: SKSpriteNode {
             highestRightBerg = firstBergOfFork
             
             for _ in 1...3 {
-                let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize))
+                let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
                 berg.name = "leftBerg"
                 
                 let deltaX = CGFloat(random()) % frame.width * 0.15 + frame.width * 0.2
@@ -129,9 +139,11 @@ class IcebergGenerator: SKSpriteNode {
                 highestLeftBerg = berg
                 
                 insertChild(berg, atIndex: 0)
+                
+                delegate?.didGenerateIceberg(berg)
             }
             for _ in 1...3 {
-                let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize))
+                let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
                 berg.name = "rightBerg"
                 
                 let deltaX = CGFloat(random()) % frame.width * 0.15 + frame.width * 0.2
@@ -144,6 +156,8 @@ class IcebergGenerator: SKSpriteNode {
                 highestRightBerg = berg
                 
                 insertChild(berg, atIndex: 0)
+                
+                delegate?.didGenerateIceberg(berg)
             }
             
             // doesn't really matter since they are equal
@@ -153,11 +167,11 @@ class IcebergGenerator: SKSpriteNode {
             mode = .straight
         } else {
             while shouldGenerate() {
-                let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize))
+                let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
+                                
+//                let deltaX = CGFloat(random()) % frame.width * 0.8 - frame.width * 0.4
                 
-                let deltaX = CGFloat(random()) % frame.width * 0.8 - frame.width * 0.4
-                
-                let xPosition = highestBerg!.position.x + deltaX * 0.5
+                let xPosition = highestBerg!.position.x // + deltaX * 0.2
                 let yPosition = highestBerg!.position.y + gapDistance
                 
                 berg.position = CGPoint(x: xPosition, y: yPosition)
@@ -182,6 +196,8 @@ class IcebergGenerator: SKSpriteNode {
                 }
                 
                 insertChild(berg, atIndex: 0)
+                
+                delegate?.didGenerateIceberg(berg)
                 
                 if shouldMove {
                     berg.beginMoving()

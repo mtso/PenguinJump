@@ -27,6 +27,9 @@ class Waves: SKSpriteNode {
     var leftmostNodeX: CGFloat!
     var rightmostNodeX: CGFloat!
     
+    var animationBegan = false
+    var stormMode = false
+    
     init(camera: SKCameraNode, gameScene: GameScene) {
         super.init(texture: nil, color: UIColor.clearColor(), size: CGSizeZero)
         
@@ -51,6 +54,7 @@ class Waves: SKSpriteNode {
         for _ in 0...rowsInView {
             update()
         }
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -158,14 +162,36 @@ class Waves: SKSpriteNode {
                 rightmostNodeX = waveNode.position.x
             }
         }
+        
     }
     
     func newWaveNode() -> SKSpriteNode {
         let waveNode = SKSpriteNode()
         waveNode.color = waveColor
-        waveNode.size = CGSize(width: nodeWidth, height: 1)
+        waveNode.size = CGSize(width: nodeWidth, height: 1.0)
         
         return waveNode
+    }
+    
+    func bob() {
+        let bobDepth = stormMode ? 6.0 : 4.0
+        let bobDuration = stormMode ? 1.8 : 3.0
+        
+        let fadeOut = SKAction.fadeAlphaTo(0.3, duration: bobDuration * 0.25)
+        let fadeIn = SKAction.fadeAlphaTo(0.7, duration: bobDuration * 0.25)
+        fadeOut.timingMode = .EaseOut
+        fadeIn.timingMode = .EaseIn
+        let wait = SKAction.waitForDuration(bobDuration * 0.5)
+        let fadeSequence = SKAction.sequence([fadeOut, wait, fadeIn])
+        
+        let down = SKAction.moveBy(CGVector(dx: 0.0, dy: -bobDepth), duration: bobDuration * 0.5)
+        let up = SKAction.moveBy(CGVector(dx: 0.0, dy: bobDepth), duration: bobDuration * 0.5)
+        down.timingMode = .EaseInEaseOut
+        up.timingMode = .EaseInEaseOut
+        let bobSequence = SKAction.sequence([down, up])
+        
+        removeAllActions()
+        runAction(SKAction.repeatActionForever(SKAction.group([fadeSequence, bobSequence])))
     }
     
 }

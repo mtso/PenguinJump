@@ -142,13 +142,11 @@ class GameScene: SKScene {
             
             let scaleUp = SKAction.scaleTo(1.5, duration: 0.5)
             scaleUp.timingMode = .EaseOut
-            let scaleDown = SKAction.scaleTo(1, duration: 0.5)
+            let scaleDown = SKAction.scaleTo(1, duration: 0.3)
             scaleDown.timingMode = .EaseIn
-            let scale = SKAction.sequence([scaleUp, scaleDown])
             
             let moveFirst = SKAction.moveBy(CGVector(dx: -deltaX * 0.9, dy: -deltaY * 0.9), duration: 0.5)
-            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX * 0.1, dy: -deltaY * 0.1), duration: 0.5)
-            let move = SKAction.sequence([moveFirst, moveSecond])
+            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX * 0.1, dy: -deltaY * 0.1), duration: 0.3)
             //move.timingMode = .EaseOut
             
             player.runAction(SKAction.group([moveFirst, scaleUp]), completion: {

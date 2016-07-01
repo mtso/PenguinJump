@@ -108,7 +108,7 @@
 				TargetAttributes = {
 					7F2C21E01D24A45C0086A56C = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = RLZEP44CD7;
+						DevelopmentTeam = RZ2DT6A2TM;
 					};
 				};
 			};
@@ -270,7 +270,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwipeTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.seungprk.SwipeTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtso.SwipeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -284,7 +284,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SwipeTest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.seungprk.SwipeTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtso.SwipeTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

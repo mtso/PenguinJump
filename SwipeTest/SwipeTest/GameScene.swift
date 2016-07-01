@@ -18,6 +18,7 @@ class GameScene: SKScene {
     
     let numberOfJumps = 2
     var jumpCount = 0
+    var okToJump = true
     
     var swipeTrail: SKEmitterNode!
     
@@ -30,8 +31,8 @@ class GameScene: SKScene {
         camera = cam
         addChild(cam)
         
-        player = SKSpriteNode(imageNamed: "Spaceship")
-        player.size = CGSize(width: player.size.width / 4, height: player.size.height / 4)
+        player = SKSpriteNode(imageNamed: "penguin-back")
+        player.size = CGSize(width: 80, height: 100)
         player.position = CGPoint(x: CGRectGetMidX(view.frame), y: CGRectGetMidY(view.frame))
         player.zPosition = 1000
         
@@ -96,9 +97,15 @@ class GameScene: SKScene {
             
             endLocation = touch.locationInNode(self)
             
-            let deltaX = beganLocation.x - endLocation!.x
-            let deltaY = beganLocation.y - endLocation!.y
-            
+            var deltaX = beganLocation.x - endLocation!.x
+            var deltaY = beganLocation.y - endLocation!.y
+            let deltaHyp = sqrt(deltaX * deltaX + deltaY * deltaY)
+            let maxHyp = CGFloat(300)
+            if deltaHyp > maxHyp {
+                let scaleFactor = maxHyp / deltaHyp
+                deltaX = deltaX * scaleFactor
+                deltaY = deltaY * scaleFactor
+            }
             jump(deltaX, deltaY)
         }
     }
@@ -110,8 +117,9 @@ class GameScene: SKScene {
     }
     
     func jump(deltaX: CGFloat, _ deltaY: CGFloat) {
-        if jumpCount < numberOfJumps {
+        if jumpCount < numberOfJumps && okToJump {
             jumpCount += 1
+            okToJump = false
             
             player.removeAllActions()
             for child in children {
@@ -122,7 +130,7 @@ class GameScene: SKScene {
             
             let target = SKSpriteNode(imageNamed: "targetcircle")
             target.name = "target"
-            target.position = CGPoint(x: player.position.x - deltaX, y: player.position.y - deltaY * 2)
+            target.position = CGPoint(x: player.position.x - deltaX, y: player.position.y - deltaY)
             target.setScale(0.5)
             target.zPosition = 100
             addChild(target)
@@ -132,19 +140,23 @@ class GameScene: SKScene {
             let wait = SKAction.waitForDuration(0.1)
             target.runAction(SKAction.repeatActionForever(SKAction.sequence([flashUp, flashDown, wait])))
             
-            let scaleUp = SKAction.scaleTo(2, duration: 0.5)
+            let scaleUp = SKAction.scaleTo(1.5, duration: 0.5)
             scaleUp.timingMode = .EaseOut
             let scaleDown = SKAction.scaleTo(1, duration: 0.5)
             scaleDown.timingMode = .EaseIn
             let scale = SKAction.sequence([scaleUp, scaleDown])
             
-            let move = SKAction.moveBy(CGVector(dx: -deltaX, dy: -deltaY * 2), duration: 1.0)
-            move.timingMode = .EaseOut
+            let moveFirst = SKAction.moveBy(CGVector(dx: -deltaX * 0.9, dy: -deltaY * 0.9), duration: 0.5)
+            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX * 0.1, dy: -deltaY * 0.1), duration: 0.5)
+            let move = SKAction.sequence([moveFirst, moveSecond])
+            //move.timingMode = .EaseOut
             
-            player.runAction(SKAction.group([move, scale]), completion: {
-                target.removeFromParent()
-                
-                self.jumpCount = 0
+            player.runAction(SKAction.group([moveFirst, scaleUp]), completion: {
+                self.okToJump = true
+                self.player.runAction(SKAction.group([moveSecond, scaleDown]), completion: {
+                    target.removeFromParent()
+                    self.jumpCount = 0
+                })
             })
         }
     }

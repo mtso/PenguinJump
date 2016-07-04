@@ -41,7 +41,7 @@ class GameScene: SKScene {
         
         for i in 0...50 {
             let platform = SKSpriteNode(color: UIColor.orangeColor(), size: CGSize(width: 200, height: 200) )
-            platform.position = CGPoint(x: player.position.x, y: player.position.y * CGFloat(i) )
+            platform.position = CGPoint(x: player.position.x, y: player.position.y * CGFloat(i) * 1.35)
             addChild(platform)
         }
         
@@ -101,7 +101,7 @@ class GameScene: SKScene {
             var deltaX = beganLocation.x - endLocation!.x
             var deltaY = beganLocation.y - endLocation!.y
             let deltaHyp = sqrt(deltaX * deltaX + deltaY * deltaY)
-            let maxHyp = CGFloat(300)
+            let maxHyp = CGFloat(500) // max Distance
             if deltaHyp > maxHyp {
                 let scaleFactor = maxHyp / deltaHyp
                 deltaX = deltaX * scaleFactor
@@ -114,7 +114,10 @@ class GameScene: SKScene {
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
         
-        cam.position = CGPoint(x: player.position.x - view!.frame.width * 2 / 2.75, y: player.position.y + view!.frame.height / 4)
+        let camMove = SKAction.moveTo(CGPoint(x: player.position.x - view!.frame.width * 2 / 2.75, y: player.position.y + view!.frame.height / 4), duration: 0.2)
+        
+        cam.runAction(camMove)
+//        cam.position = CGPoint(x: player.position.x - view!.frame.width * 2 / 2.75, y: player.position.y + view!.frame.height / 4)
     }
     
     func jump(deltaX: CGFloat, _ deltaY: CGFloat) {
@@ -135,11 +138,11 @@ class GameScene: SKScene {
             let scaleDown = SKAction.scaleTo(1, duration: 0.3)
             scaleDown.timingMode = .EaseIn
             
-            let moveFirst = SKAction.moveBy(CGVector(dx: -deltaX * 0.9, dy: -deltaY * 0.9), duration: 0.5)
-            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX * 0.1, dy: -deltaY * 0.1), duration: 0.3)
+            let moveFirst = SKAction.moveBy(CGVector(dx: -deltaX * 0.95, dy: -deltaY * 0.95), duration: 0.2)
+            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX * 0.05, dy: -deltaY * 0.05), duration: 0.6)
             moveFirst.timingMode = .EaseOut
             
-            player.runAction(SKAction.group([moveFirst, scaleUp]), completion: {
+            player.runAction(SKAction.group([moveFirst/*, scaleUp*/]), completion: {
                 
                 if self.useSavedJump {
                     
@@ -150,13 +153,13 @@ class GameScene: SKScene {
                     // If double jump during landing, set `okToJump` to true before completion
                     self.okToJump = true
 
-                    self.player.runAction(SKAction.group([moveSecond, scaleDown]), completion: {
+                    self.player.runAction(SKAction.group([moveSecond/*, scaleDown*/]), completion: {
                         self.childNodeWithName("target")?.removeFromParent()
                         self.jumpCount = 0
                     })
                 } else {
                     
-                    self.player.runAction(SKAction.group([moveSecond, scaleDown]), completion: {
+                    self.player.runAction(SKAction.group([moveSecond/*, scaleDown*/]), completion: {
                         
                         // If already double jumped once, set `okToJump` to true after completion
                         self.okToJump = true
@@ -200,14 +203,14 @@ class GameScene: SKScene {
             let scaleDown = SKAction.scaleTo(1, duration: 0.3)
             scaleUp.timingMode = .EaseOut
             scaleDown.timingMode = .EaseIn
-            let moveFirst = SKAction.moveBy(CGVector(dx: -deltaX2 * 0.9, dy: -deltaY2 * 0.9), duration: 0.5)
-            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX2 * 0.1, dy: -deltaY2 * 0.1), duration: 0.3)
+            let moveFirst = SKAction.moveBy(CGVector(dx: -deltaX2 * 0.95, dy: -deltaY2 * 0.95), duration: 0.2)
+            let moveSecond = SKAction.moveBy(CGVector(dx: -deltaX2 * 0.05, dy: -deltaY2 * 0.05), duration: 0.2)
             moveFirst.timingMode = .EaseOut
             
             let scale = SKAction.sequence([scaleUp, scaleDown])
             let move = SKAction.sequence([moveFirst, moveSecond])
             
-            player.runAction(SKAction.group([scale, move]), completion: {
+            player.runAction(SKAction.group([/*scale,*/ move]), completion: {
                 self.childNodeWithName("target")?.removeFromParent()
                 self.okToJump = true
                 self.jumpCount = 0
@@ -219,6 +222,7 @@ class GameScene: SKScene {
     func newTargetAt(position: CGPoint) -> SKSpriteNode {
         
         let target = SKSpriteNode(imageNamed: "targetcircle")
+        target.alpha = 0
         target.name = "target"
         target.position = position // CGPoint(x: player.position.x - deltaX, y: player.position.y - deltaY)
         target.setScale(0.5)
@@ -227,7 +231,7 @@ class GameScene: SKScene {
         let flashDown = SKAction.fadeAlphaTo(0, duration: 0.1)
         let flashUp = SKAction.fadeAlphaTo(1, duration: 0.1)
         let wait = SKAction.waitForDuration(0.1)
-        target.runAction(SKAction.repeatActionForever(SKAction.sequence([flashUp, flashDown, wait])))
+//        target.runAction(SKAction.repeatActionForever(SKAction.sequence([flashUp, flashDown, wait])))
         
         return target
     }

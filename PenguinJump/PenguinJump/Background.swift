@@ -18,7 +18,7 @@ class Background: SKSpriteNode {
         position = view.center
         zPosition = -5000
         
-        _ = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: "randomSharkGenerate", userInfo: nil, repeats: true)
+        _ = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: #selector(Background.randomSharkGenerate), userInfo: nil, repeats: true)
     }
     
     required init?(coder aDecoder: NSCoder) {

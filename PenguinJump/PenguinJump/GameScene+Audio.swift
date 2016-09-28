@@ -69,7 +69,7 @@ extension GameScene {
             player.stop()
         } else {
             // Use afterDelay value to change duration.
-            performSelector("fadeVolumeDown:", withObject: player, afterDelay: 0.02)
+            performSelector(#selector(GameScene.fadeVolumeDown(_:)), withObject: player, afterDelay: 0.02)
         }
     }
     
@@ -77,7 +77,7 @@ extension GameScene {
         player.volume += 0.01
         if player.volume < musicVolume {
             // Use afterDelay value to change duration.
-            performSelector("fadeVolumeUp:", withObject: player, afterDelay: 0.02)
+            performSelector(#selector(GameScene.fadeVolumeUp(_:)), withObject: player, afterDelay: 0.02)
         }
     }
     

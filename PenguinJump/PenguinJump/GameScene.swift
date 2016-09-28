@@ -215,8 +215,8 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
         cam.addChild(pauseButton)
         
         // Register for application state notifications.
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "enterPause", name: UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "becomeActive", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameScene.enterPause), name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(GameScene.becomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     func setupScene() {

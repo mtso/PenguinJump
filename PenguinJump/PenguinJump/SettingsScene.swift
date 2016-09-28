@@ -209,14 +209,14 @@ class SettingsScene: SKScene {
             player.stop()
         } else {
             // Use afterDelay value to change duration.
-            performSelector("fadeVolumeDown:", withObject: player, afterDelay: 0.02)
+            performSelector(#selector(SettingsScene.fadeVolumeDown(_:)), withObject: player, afterDelay: 0.02)
         }
     }
     
     func fadeVolumeUp(player: AVAudioPlayer ) {
         player.volume += 0.01
         if player.volume < 1.0 {
-            performSelector("fadeVolumeUp:", withObject: player, afterDelay: 0.02)
+            performSelector(#selector(SettingsScene.fadeVolumeUp(_:)), withObject: player, afterDelay: 0.02)
         }
     }
     

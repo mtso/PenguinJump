@@ -201,7 +201,7 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
         cam.runAction(pan)
         
         // Set up Debugging buttons
-//        setupDebugButtons()
+        setupDebugButtons()
         
         pauseButton.name = "pauseButton"
         pauseButton.fontName = "Helvetica Neue Condensed Black"
@@ -416,9 +416,40 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
     
     // MARK: - Scene Controls
     
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if let positionInScene = touches.first?.locationInNode(self) {
+            
+            let indicator = SKShapeNode(circleOfRadius: 20)
+            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+            indicator.lineWidth = 2
+            indicator.zPosition = 100000000
+            indicator.position = positionInScene
+            self.addChild(indicator)
+            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
+                indicator.removeFromParent()
+            })
+        }
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if let positionInScene = touches.first?.locationInNode(self) {
+            
+            let indicator = SKShapeNode(circleOfRadius: 30)
+            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+            indicator.lineWidth = 2
+            indicator.zPosition = 100000000
+            indicator.position = positionInScene
+            self.addChild(indicator)
+            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
+                indicator.removeFromParent()
+            })
+        }
+        
         for touch in touches {
             let positionInScene = touch.locationInNode(self)
+            
             let touchedNodes = self.nodesAtPoint(positionInScene)
             for touchedNode in touchedNodes {
                 if let name = touchedNode.name {
@@ -509,6 +540,20 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+        if let positionInScene = touches.first?.locationInNode(self) {
+            
+            let indicator = SKShapeNode(circleOfRadius: 30)
+            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+            indicator.lineWidth = 2
+            indicator.zPosition = 100000000
+            indicator.position = positionInScene
+            self.addChild(indicator)
+            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
+                indicator.removeFromParent()
+            })
+        }
+        
         for touch in touches {
             let positionInScene = touch.locationInNode(self)
             // Doublejump Functionality

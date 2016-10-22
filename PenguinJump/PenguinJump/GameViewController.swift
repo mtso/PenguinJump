@@ -42,9 +42,9 @@ class GameViewController: UIViewController {
         
         let scene = CutScene(size: view.bounds.size)
         let skView = view as! SKView
-        skView.showsFPS = true
-        skView.showsNodeCount = true
-        skView.showsPhysics = true
+        skView.showsFPS = false
+        skView.showsNodeCount = false
+        skView.showsPhysics = false
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         

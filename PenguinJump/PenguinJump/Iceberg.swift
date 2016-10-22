@@ -92,50 +92,50 @@ class Iceberg: SKSpriteNode {
         // Iceberg Image
         UIGraphicsBeginImageContextWithOptions(renderingRect.size, false, 0.0)
         let context = UIGraphicsGetCurrentContext()
-        CGContextSaveGState(context)
+        CGContextSaveGState(context!)
         
-        CGContextTranslateCTM(context, 0, renderingRect.height)
-        CGContextScaleCTM(context, 1, -1)
-        CGContextSetRGBFillColor(context, 1, 1, 1, 1)
-        CGContextAddLines(context, vertices, vertices.count)
-        CGContextFillPath(context)
+        CGContextTranslateCTM(context!, 0, renderingRect.height)
+        CGContextScaleCTM(context!, 1, -1)
+        CGContextSetRGBFillColor(context!, 1, 1, 1, 1)
+        CGContextAddLines(context!, vertices, vertices.count)
+        CGContextFillPath(context!)
         let bergImage = UIGraphicsGetImageFromCurrentImageContext()
         
-        CGContextRestoreGState(context)
+        CGContextRestoreGState(context!)
         UIGraphicsEndImageContext()
         
         // Underwater Shape Image
         UIGraphicsBeginImageContextWithOptions(CGSize(width: renderingRect.width, height: renderingRect.height + shadowHeight + underwaterHeight), false, 0.0)
         let contextExtruded = UIGraphicsGetCurrentContext()
         
-        CGContextSaveGState(contextExtruded)
-        CGContextTranslateCTM(contextExtruded, 0, renderingRect.height)//+ shadowHeight + underwaterHeight)
-        CGContextScaleCTM(contextExtruded, 1, -1)
-        CGContextAddLines(contextExtruded, underwaterVertices, underwaterVertices.count)
+        CGContextSaveGState(contextExtruded!)
+        CGContextTranslateCTM(contextExtruded!, 0, renderingRect.height)//+ shadowHeight + underwaterHeight)
+        CGContextScaleCTM(contextExtruded!, 1, -1)
+        CGContextAddLines(contextExtruded!, underwaterVertices, underwaterVertices.count)
         
-        CGContextSetRGBFillColor(contextExtruded, 0.88, 0.93, 0.96, 1)
-        CGContextFillPath(contextExtruded)
+        CGContextSetRGBFillColor(contextExtruded!, 0.88, 0.93, 0.96, 1)
+        CGContextFillPath(contextExtruded!)
         let shadowImage = UIGraphicsGetImageFromCurrentImageContext()
         let shadowMaskImage = UIGraphicsGetImageFromCurrentImageContext()
-        CGContextRestoreGState(contextExtruded)
+        CGContextRestoreGState(contextExtruded!)
         
-        CGContextSaveGState(contextExtruded)
-        CGContextTranslateCTM(contextExtruded, 0, renderingRect.height)
-        CGContextScaleCTM(contextExtruded, 1, -1)
-        CGContextAddLines(contextExtruded, underwaterVertices, underwaterVertices.count)
+        CGContextSaveGState(contextExtruded!)
+        CGContextTranslateCTM(contextExtruded!, 0, renderingRect.height)
+        CGContextScaleCTM(contextExtruded!, 1, -1)
+        CGContextAddLines(contextExtruded!, underwaterVertices, underwaterVertices.count)
         
-        CGContextSetRGBFillColor(contextExtruded, 0.25, 0.55, 0.8, 1)
-        CGContextFillPath(contextExtruded)
+        CGContextSetRGBFillColor(contextExtruded!, 0.25, 0.55, 0.8, 1)
+        CGContextFillPath(contextExtruded!)
         let underwaterImage = UIGraphicsGetImageFromCurrentImageContext()
-        CGContextRestoreGState(contextExtruded)
+        CGContextRestoreGState(contextExtruded!)
         UIGraphicsEndImageContext()
         
         // ***** Create Sprite Nodes *****
         // Create the textures
-        let bergTexture = SKTexture(image: bergImage)
-        let underwaterTexture = SKTexture(image: underwaterImage)
-        let shadowMaskTexture = SKTexture(image: shadowMaskImage)
-        let shadowTexture = SKTexture(image: shadowImage)
+        let bergTexture = SKTexture(image: bergImage!)
+        let underwaterTexture = SKTexture(image: underwaterImage!)
+        let shadowMaskTexture = SKTexture(image: shadowMaskImage!)
+        let shadowTexture = SKTexture(image: shadowImage!)
         
         // Instantiate nodes
         berg = SKSpriteNode(texture: bergTexture)

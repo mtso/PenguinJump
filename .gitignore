@@ -1,10 +1,2 @@
-
-*.xcuserstate
-
-PenguinJumpDrag Prototype/PenguinJump.xcodeproj/project.xcworkspace/xcuserdata/matthewtso.xcuserdatad/UserInterfaceState.xcuserstate
-
-PenguinJumpDrag Prototype/PenguinJump.xcodeproj/project.xcworkspace/xcuserdata/matthewtso.xcuserdatad/UserInterfaceState.xcuserstate
-
-PenguinJumpDrag Prototype/PenguinJump.xcodeproj/project.xcworkspace/xcuserdata/matthewtso.xcuserdatad/UserInterfaceState.xcuserstate
-
-IcebergGenerator/IcebergGenerator.xcodeproj/project.xcworkspace/xcuserdata/matthewtso.xcuserdatad/UserInterfaceState.xcuserstate
+.DS_Store
+xcuserdata

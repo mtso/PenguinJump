@@ -40,7 +40,7 @@ class Background: SKSpriteNode {
         }
         let fishAnim = SKAction.animateWithTextures(fishFrames, timePerFrame: 0.6)
         
-        let randomX = CGFloat(random()) % scene!.frame.width
+        let randomX = CGFloat(arc4random()) % scene!.frame.width
         let sharkPosition = CGPoint(
             x: camera.position.x - scene!.frame.width + randomX,
             y: camera.position.y + scene!.frame.height / 2)

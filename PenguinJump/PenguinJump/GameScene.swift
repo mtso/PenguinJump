@@ -201,7 +201,7 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
         cam.runAction(pan)
         
         // Set up Debugging buttons
-        setupDebugButtons()
+//        setupDebugButtons()
         
         pauseButton.name = "pauseButton"
         pauseButton.fontName = "Helvetica Neue Condensed Black"
@@ -416,36 +416,7 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
     
     // MARK: - Scene Controls
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if let positionInScene = touches.first?.locationInNode(self) {
-            
-            let indicator = SKShapeNode(circleOfRadius: 20)
-            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            indicator.lineWidth = 2
-            indicator.zPosition = 100000000
-            indicator.position = positionInScene
-            self.addChild(indicator)
-            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
-                indicator.removeFromParent()
-            })
-        }
-    }
-    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if let positionInScene = touches.first?.locationInNode(self) {
-            
-            let indicator = SKShapeNode(circleOfRadius: 30)
-            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            indicator.lineWidth = 2
-            indicator.zPosition = 100000000
-            indicator.position = positionInScene
-            self.addChild(indicator)
-            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
-                indicator.removeFromParent()
-            })
-        }
         
         for touch in touches {
             let positionInScene = touch.locationInNode(self)
@@ -490,8 +461,8 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
 
                         case "lightningButton":
                             if let berg = (stage as IcebergGenerator).highestBerg {
-                                let lightningRandomX = CGFloat(random()) % berg.size.width - berg.size.width / 2
-                                let lightningRandomY = CGFloat(random()) % berg.size.height - berg.size.height / 2
+                                let lightningRandomX = CGFloat(arc4random()) % berg.size.width - berg.size.width / 2
+                                let lightningRandomY = CGFloat(arc4random()) % berg.size.height - berg.size.height / 2
                                 let lightningPosition = CGPoint(x: berg.position.x + lightningRandomX, y: berg.position.y + lightningRandomY)
                                 let lightning = Lightning(view: view!)
                                 lightning.position = lightningPosition
@@ -540,19 +511,6 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if let positionInScene = touches.first?.locationInNode(self) {
-            
-            let indicator = SKShapeNode(circleOfRadius: 30)
-            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            indicator.lineWidth = 2
-            indicator.zPosition = 100000000
-            indicator.position = positionInScene
-            self.addChild(indicator)
-            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
-                indicator.removeFromParent()
-            })
-        }
         
         for touch in touches {
             let positionInScene = touch.locationInNode(self)
@@ -692,7 +650,7 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
             thunderSound?.play()
         }
         
-        windDirectionRight = random() % 2 == 0 ? true : false
+        windDirectionRight = arc4random() % 2 == 0 ? true : false
         
         waves.stormMode = self.stormMode
         waves.bob()
@@ -764,24 +722,24 @@ class GameScene: SKScene, IcebergGeneratorDelegate {
     func didGenerateIceberg(generatedIceberg: Iceberg) {
         let berg = generatedIceberg
         
-        let coinRandomX = CGFloat(random()) % berg.size.width - berg.size.width / 2
-        let coinRandomY = CGFloat(random()) % berg.size.height - berg.size.height / 2
+        let coinRandomX = CGFloat(arc4random()) % berg.size.width - berg.size.width / 2
+        let coinRandomY = CGFloat(arc4random()) % berg.size.height - berg.size.height / 2
         let coinPosition = CGPoint(x: berg.position.x + coinRandomX, y: berg.position.y + coinRandomY)
         
-        let coinRandom = random() % 3
+        let coinRandom = arc4random() % 3
         if coinRandom == 0 {
             let coin = Coin()
             coin.position = coinPosition
             coinLayer?.addChild(coin)
         }
         
-        let lightningRandomX = CGFloat(random()) % berg.size.width - berg.size.width / 2
-        let lightningRandomY = CGFloat(random()) % berg.size.height - berg.size.height / 2
+        let lightningRandomX = CGFloat(arc4random()) % berg.size.width - berg.size.width / 2
+        let lightningRandomY = CGFloat(arc4random()) % berg.size.height - berg.size.height / 2
         let lightningPosition = CGPoint(x: berg.position.x + lightningRandomX, y: berg.position.y + lightningRandomY)
         
         let stormIntensityInverseModifier = (2 * stormIntensity + 1)
         let lightningProbability = (-95 * difficulty + 100)
-        let lightningRandom: Int = random() % Int(lightningProbability / stormIntensityInverseModifier)
+        let lightningRandom: Int = Int(arc4random()) % Int(lightningProbability / stormIntensityInverseModifier)
         if lightningRandom == 0 {
             let lightning = Lightning(view: view!)
             lightning.position = lightningPosition

@@ -31,8 +31,8 @@ extension GameScene {
     func shakeScreen() {
         if enableScreenShake {
             let shakeAnimation = CAKeyframeAnimation(keyPath: "transform")
-            //            let randomIntensityOne = CGFloat(random() % 4 + 1)
-            let randomIntensityTwo = CGFloat(random() % 4 + 1)
+            //            let randomIntensityOne = CGFloat(arc4random() % 4 + 1)
+            let randomIntensityTwo = CGFloat(arc4random() % 4 + 1)
             shakeAnimation.values = [
                 //NSValue( CATransform3D:CATransform3DMakeTranslation(-randomIntensityOne, 0, 0 ) ),
                 //NSValue( CATransform3D:CATransform3DMakeTranslation( randomIntensityOne, 0, 0 ) ),

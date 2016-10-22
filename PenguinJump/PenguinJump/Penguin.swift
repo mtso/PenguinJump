@@ -214,19 +214,6 @@ class Penguin: SKSpriteNode {
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         
-        if let positionInScene = touches.first?.locationInNode(self) {
-            
-            let indicator = SKShapeNode(circleOfRadius: 30)
-            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            indicator.lineWidth = 2
-            indicator.zPosition = 100000000
-            indicator.position = positionInScene
-            self.addChild(indicator)
-            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
-                indicator.removeFromParent()
-            })
-        }
-        
         playerTouched = true
         targeting = true
         
@@ -242,19 +229,6 @@ class Penguin: SKSpriteNode {
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if let positionInScene = touches.first?.locationInNode(self) {
-            
-            let indicator = SKShapeNode(circleOfRadius: 20)
-            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            indicator.lineWidth = 2
-            indicator.zPosition = 100000000
-            indicator.position = positionInScene
-            self.addChild(indicator)
-            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
-                indicator.removeFromParent()
-            })
-        }
         
         body.texture = penguinAtlas.textureNamed("penguin-ready")
         
@@ -281,19 +255,6 @@ class Penguin: SKSpriteNode {
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        
-        if let positionInScene = touches.first?.locationInNode(self) {
-            
-            let indicator = SKShapeNode(circleOfRadius: 30)
-            indicator.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-            indicator.lineWidth = 2
-            indicator.zPosition = 100000000
-            indicator.position = positionInScene
-            self.addChild(indicator)
-            indicator.runAction(SKAction.fadeOutWithDuration(0.2), completion: {
-                indicator.removeFromParent()
-            })
-        }
         
         for touch: AnyObject in touches {
             let touchPosition = touch.locationInNode(self)

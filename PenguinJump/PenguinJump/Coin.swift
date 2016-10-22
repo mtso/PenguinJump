@@ -80,11 +80,11 @@ class Coin: SKSpriteNode {
      */
     func generateCoinParticles(camera: SKCameraNode) {
         
-        let numberOfParticles = random() % 2 + 3
+        let numberOfParticles = arc4random() % 2 + 3
         
         for _ in 1...numberOfParticles {
             let particle = SKSpriteNode(color: SKColor.yellowColor(), size: CGSize(width: size.width / 5, height: size.width / 5))
-            //                let randomX = random() % Int(size.width) - Int(size.width / 2)
+            //                let randomX = arc4random() % Int(size.width) - Int(size.width / 2)
             let randomX = Int( arc4random_uniform( UInt32(size.width) ) ) - Int(size.width / 2)
             let randomY = Int( arc4random_uniform( UInt32(size.height) ) ) - Int(size.height / 2)
             

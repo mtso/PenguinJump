@@ -129,7 +129,7 @@ class IcebergGenerator: SKSpriteNode {
                 let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
                 berg.name = "leftBerg"
                 
-                let deltaX = CGFloat(random()) % frame.width * 0.15 + frame.width * 0.2
+                let deltaX = CGFloat(arc4random()) % frame.width * 0.15 + frame.width * 0.2
                 
                 let xPosition = highestLeftBerg!.position.x - deltaX
                 let yPosition = highestLeftBerg!.position.y + gapDistance
@@ -146,7 +146,7 @@ class IcebergGenerator: SKSpriteNode {
                 let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
                 berg.name = "rightBerg"
                 
-                let deltaX = CGFloat(random()) % frame.width * 0.15 + frame.width * 0.2
+                let deltaX = CGFloat(arc4random()) % frame.width * 0.15 + frame.width * 0.2
                 
                 let xPosition = highestRightBerg!.position.x + deltaX
                 let yPosition = highestRightBerg!.position.y + gapDistance
@@ -169,7 +169,7 @@ class IcebergGenerator: SKSpriteNode {
             while shouldGenerate() {
                 let berg = Iceberg(size: CGSize(width: bergSize, height: bergSize), stormMode: (scene as! GameScene).stormMode)
                                 
-//                let deltaX = CGFloat(random()) % frame.width * 0.8 - frame.width * 0.4
+//                let deltaX = CGFloat(arc4random()) % frame.width * 0.8 - frame.width * 0.4
                 
                 let xPosition = highestBerg!.position.x // + deltaX * 0.2
                 let yPosition = highestBerg!.position.y + gapDistance

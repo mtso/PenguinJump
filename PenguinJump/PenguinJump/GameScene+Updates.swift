@@ -127,8 +127,8 @@ extension GameScene {
             
             for _ in 0..<numberOfRainDrops {
                 
-                let randomX = 3.0 * CGFloat(random()) % view!.frame.width - view!.frame.width / 2
-                let randomY = 2.0 * CGFloat(random()) % view!.frame.height - view!.frame.height / 4
+                let randomX = 3.0 * CGFloat(arc4random()) % view!.frame.width - view!.frame.width / 2
+                let randomY = 2.0 * CGFloat(arc4random()) % view!.frame.height - view!.frame.height / 4
                 
                 let raindrop = Raindrop()
                 addChild(raindrop)
@@ -321,7 +321,7 @@ extension GameScene {
         for particle in coin.particles {
             let chargeBarPositionInCam = cam.convertPoint(chargeBar.position, fromNode: scoreLabel)
             
-            let randomX = CGFloat(random()) % (chargeBar.bar.position.x + 1)
+            let randomX = CGFloat(arc4random()) % (chargeBar.bar.position.x + 1)
             
             let move = SKAction.moveTo(CGPoint(x: chargeBarPositionInCam.x + randomX, y: chargeBarPositionInCam.y), duration: 1.0)
             move.timingMode = .EaseOut

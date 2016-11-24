@@ -2,6 +2,8 @@
 
 # Penguin Jump: CIS55 Project
 
+[Video Demo](https://www.dropbox.com/s/73iq8oisbnpdh2t/penguin-jump.mov?dl=0)
+
 Penguin Jump is a 2D infinite runner game created for the iOS programming CIS55 course at De Anza College.
 
 ## Team Members
